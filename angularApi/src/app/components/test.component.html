@@ -1,0 +1,20 @@
+<table>
+    <thead>
+        <th>Id</th>
+        <th>Nombre</th>
+        <th>Color</th>
+        <th>Precio</th>
+    </thead>
+    <tbody>
+        <tr *ngFor="let product if productList">
+            <div *ngIf="product.data !== null && product.data.hasOwnProperty('price') || product.data !== null && product.data.hasOwnProperty('color')">
+                <td>{{product.id}}</td>
+                <td>{{product.name}}</td>
+                <td>{{product.data.color}}</td>
+                <td>{{product.data.price}}</td>
+                <button>View</button>
+                <button>Delete</button>
+            </div>
+        </tr>
+    </tbody>
+</table>
