@@ -1,0 +1,12 @@
+tbody{
+    background-color: aqua;
+}
+thead{
+    background-color: blue;
+}
+table{
+    background-color: antiquewhite;
+}
+.nodata{
+    background-color: rgb(255, 0, 0);
+}
