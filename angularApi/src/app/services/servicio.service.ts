@@ -22,4 +22,7 @@ export class ServicioTest {
   deleteProduct(productId: number): Observable<void>{
     return this.http.delete<void>(`${this.url}/${productId}`)
   }
+  updateProduct(producto: product): Observable<product>{
+    return this.http.put<product>(`${this.url}/${producto.id}`,producto)
+  }
 }

@@ -4,6 +4,8 @@
         <th>Nombre</th>
         <th>Color</th>
         <th>Precio</th>
+        <th></th>
+        <th></th>
     </thead>
     <tbody>
         <tr *ngFor="let product of productList">
@@ -13,17 +15,15 @@
             <td class="nodata" *ngIf="!(product.data !== null && product.data.hasOwnProperty('color'))">No color</td>
             <td *ngIf="product.data !== null && product.data.hasOwnProperty('price')">{{product.data.price}}</td>
             <td class="nodata" *ngIf="!(product.data !== null && product.data.hasOwnProperty('price'))">No Price</td>
-            <button>View</button>
-            <button (click)="deleteProduct(product.id)">Delete</button>
+            <td><button (click)="updateProduct(product)">View</button></td>
+            <td><button (click)="deleteProduct(product.id)">Delete</button></td>
         </tr>
     </tbody>
     <tfoot>
-        <tr>
-            <td></td>
-            <td><input placeholder="Name" type="text" [(ngModel)]="Product.name"></td>
-            <td><input placeholder="Color" type="color" [(ngModel)]="Product.data.color"></td>
-            <td><input placeholder="Price" type="number" [(ngModel)]="Product.data.price"></td>
-            <td><button (click)="addProduct()">Add</button></td>
-        </tr>
+        <td></td>
+        <td><input type="text" placeholder="Nombre" [(ngModel)]="Product.name"></td>
+        <td><input type="color" [(ngModel)]="Product.data.color"></td>
+        <td><input type="number"placeholder="Precio" [(ngModel)]="Product.data.price"></td>
+        <td><button (click)="addProduct()">Add</button></td>
     </tfoot>
 </table>

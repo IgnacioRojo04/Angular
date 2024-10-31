@@ -1,7 +1,9 @@
 import { Component } from "@angular/core";
 import { ServicioTest } from "../services/servicio.service";
 import { product } from "../modules/product";
-
+import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { updateModal } from "../update/updateModal"
 @Component({
     selector: 'app-testcomp',
     templateUrl: './test.component.html',
@@ -9,11 +11,11 @@ import { product } from "../modules/product";
 })
 
 export class TestComponent {
-    Product: product = {id:0, name:'', data:{color:'#ffffff', price:0}}
-    
+    Product: product = { id: 0, name: '', data: { color: '#ffffff', price: 0 } }
+
     productList = new Array<product>()
 
-    constructor(private testService: ServicioTest){}
+    constructor(private ngModal: NgbModal, private testService: ServicioTest) { }
 
     ngOnInit(): void {
         this.testService.getAll().subscribe((response) => {
@@ -21,27 +23,30 @@ export class TestComponent {
         })
     }
 
-    addProduct():void{
-        if(this.Product.name && this.Product.data.price && this.Product.data.color){
+    addProduct(): void {
+        console.log(this.Product.name)
+        console.log("afaw")
+        if (this.Product.name && this.Product.data.price && this.Product.data.color) {
             let id = 0
-            for (let producto of this.productList) if (id < producto.id) id = producto.id +1
+            for (let producto of this.productList) if (id < producto.id) id = producto.id + 1
             this.Product.id = id
+            
             this.testService.addProduct(this.Product).subscribe(
                 (response) => {
                     this.productList.push(response)
-
+                    this.Product = { id: 0, name: '', data: { color: '', price: 0 } }
                 },
                 (error) => {
                     console.error('Error al agregar el producto:', error);
                 }
             )
-            this.Product = { id: 0, name: '', data: { color: '', price: 0 } }
+            
         }
     }
 
-    deleteProduct(id: number): void{
+    deleteProduct(id: number): void {
         this.testService.deleteProduct(id).subscribe(
-            (response) =>{
+            (response) => {
                 this.productList = this.productList.filter(product => product.id !== id);
             },
             (error) => {
@@ -51,5 +56,18 @@ export class TestComponent {
         )
     }
 
+    updateProduct(selectedProduct: product): void {
+        console.log(selectedProduct)
+        const ngModal = this.ngModal.open(updateModal, { backdrop: 'static' });
+        ngModal.componentInstance.product = selectedProduct
 
+        ngModal.result.then(resultado => {
+            if (resultado = true) {
+                this.testService.updateProduct(selectedProduct).subscribe((response) => {
+                })
+            }
+        }).catch((error) => {
+            console.error("error", error);
+        })
+    }
 }
