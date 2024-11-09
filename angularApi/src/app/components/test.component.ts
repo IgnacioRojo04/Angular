@@ -30,7 +30,7 @@ export class TestComponent {
             let id = 0
             for (let producto of this.productList) if (id < producto.id) id = producto.id + 1
             this.Product.id = id
-            
+
             this.testService.addProduct(this.Product).subscribe(
                 (response) => {
                     this.productList.push(response)
@@ -40,7 +40,7 @@ export class TestComponent {
                     console.error('Error al agregar el producto:', error);
                 }
             )
-            
+
         }
     }
 
@@ -58,12 +58,18 @@ export class TestComponent {
 
     updateProduct(selectedProduct: product): void {
         console.log(selectedProduct)
+        const copy = JSON.parse(JSON.stringify(selectedProduct));
         const ngModal = this.ngModal.open(updateModal, { backdrop: 'static' });
-        ngModal.componentInstance.product = selectedProduct
+        ngModal.componentInstance.product = copy
 
         ngModal.result.then(resultado => {
-            if (resultado = true) {
-                this.testService.updateProduct(selectedProduct).subscribe((response) => {
+            if (resultado) {
+                this.testService.updateProduct(copy).subscribe((response) => {
+                    const index = this.productList.findIndex(p => p.id === response.id);
+                    if (index !== -1) {
+                        console.log(response)
+                        this.productList[index] = response;
+                    }
                 })
             }
         }).catch((error) => {

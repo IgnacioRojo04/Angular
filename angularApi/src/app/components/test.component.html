@@ -12,7 +12,7 @@
             <td>{{product.id}}</td>
             <td>{{product.name}}</td>
             <td *ngIf="product.data !== null && product.data.hasOwnProperty('color')">{{product.data.color}}</td>
-            <td class="nodata" *ngIf="!(product.data !== null && product.data.hasOwnProperty('color'))">No color</td>
+            <td class="nodata" *ngIf="!(product.data !== null && product.data.hasOwnProperty('color')) || product.data == null">No color</td>
             <td *ngIf="product.data !== null && product.data.hasOwnProperty('price')">{{product.data.price}}</td>
             <td class="nodata" *ngIf="!(product.data !== null && product.data.hasOwnProperty('price'))">No Price</td>
             <td><button (click)="updateProduct(product)">View</button></td>
@@ -21,9 +21,9 @@
     </tbody>
     <tfoot>
         <td></td>
-        <td><input type="text" placeholder="Nombre" [(ngModel)]="Product.name"></td>
+        <td><input type="text" placeholder="Nombre" [(ngModel)]="Product.name" ></td>
         <td><input type="color" [(ngModel)]="Product.data.color"></td>
         <td><input type="number"placeholder="Precio" [(ngModel)]="Product.data.price"></td>
-        <td><button (click)="addProduct()">Add</button></td>
+        <td colspan="2"><button id="Add"(click)="addProduct()" >Add</button></td>
     </tfoot>
 </table>

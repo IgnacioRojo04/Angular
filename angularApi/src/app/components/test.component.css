@@ -1,22 +1,13 @@
 table{
-    align-items: center;
     background-color: rgb(70, 70, 70);
     color: rgb(255, 242, 122);
     border-radius: 5%;
     transition: transform 0.3s ease; /* Suaviza el efecto de hover */
     overflow: hidden;
-    /* Añade un margen pequeño para que no se recorte */
-    margin: 0 10px;
 }
 table:hover {
     transform: scale(1.02); /* Escala la tabla un poco */
     box-shadow: 0px 0px 15px rgba(199, 199, 199, 0.5); /* Sombra para mejorar el efecto */
-}
-tbody{
-
-}
-thead{
-
 }
 .nodata{
     background-color: rgb(255, 0, 0);
@@ -24,9 +15,8 @@ thead{
 }
 td{
     text-align: center;
-    align-items: c;
-    padding-left: 25px;
-    padding-right: 25px;
+    padding-top: 10px;
+
 }
 th{
     text-align: center;
@@ -39,8 +29,11 @@ tr:hover{
     opacity: 1;
     box-shadow: 0px 0px 12px rgba(199, 199, 199, 0.61) inset;
     color: rgb(255, 230, 0);
-    scale: 1.05;
     
+}
+tr:hover > tr:not(:hover){
+    filter: blur(5px);
+    opacity: 0.5;
 }
 button{
     background-color: rgb(247, 247, 247);
@@ -49,4 +42,6 @@ button:hover{
     
     box-shadow: 0px 0px 12px black inset;
 }
-
+#Add{
+    scale: 1.25;
+}
