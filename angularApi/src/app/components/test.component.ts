@@ -1,6 +1,6 @@
 import { Component } from "@angular/core";
 import { ServicioTest } from "../services/servicio.service";
-import { product } from "../modules/product";
+import { product } from "../model/product";
 import { NgbActiveModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { updateModal } from "../update/updateModal"
@@ -24,12 +24,10 @@ export class TestComponent {
     }
 
     addProduct(): void {
-        console.log(this.Product.name)
-        console.log("afaw")
+
         if (this.Product.name && this.Product.data.price && this.Product.data.color) {
-            let id = 0
-            for (let producto of this.productList) if (id < producto.id) id = producto.id + 1
-            this.Product.id = id
+
+            this.Product.id = 1
 
             this.testService.addProduct(this.Product).subscribe(
                 (response) => {
@@ -57,20 +55,18 @@ export class TestComponent {
     }
 
     updateProduct(selectedProduct: product): void {
-        console.log(selectedProduct)
-        const copy = JSON.parse(JSON.stringify(selectedProduct));
         const ngModal = this.ngModal.open(updateModal, { backdrop: 'static' });
-        ngModal.componentInstance.product = copy
+        ngModal.componentInstance.product = selectedProduct
 
         ngModal.result.then(resultado => {
             if (resultado) {
-                this.testService.updateProduct(copy).subscribe((response) => {
-                    const index = this.productList.findIndex(p => p.id === response.id);
-                    if (index !== -1) {
-                        console.log(response)
-                        this.productList[index] = response;
-                    }
-                })
+                this.testService.updateProduct(selectedProduct).subscribe((response) => {
+                    Object.assign(selectedProduct, response); 
+                },
+            (error) =>{
+                console.error('Error al actualizar el producto:', error);
+            });
+
             }
         }).catch((error) => {
             console.error("error", error);

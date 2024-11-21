@@ -8,6 +8,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap'; // Importa NgbModule
 import { updateModal } from './update/updateModal';
 
+
 @NgModule({
   declarations: [
     AppComponent,
